@@ -3,17 +3,17 @@ import javax.swing.*;
 
 class UneFenetre extends JFrame 
 {
-    UnMobile sonMobile;
-    private final int LARG=400, HAUT=250;
+    UnMobile tache;
+    private final int LARG=1000, HAUT=550;
     
     public UneFenetre()
     {
-	sonMobile = new UnMobile(LARG, HAUT);
-	Thread laTache = new Thread(sonMobile);
-    this.add(sonMobile);
+    tache = new UnMobile(LARG, HAUT);
+	Thread supportTache = new Thread(tache);
+    this.add(tache);
     this.setVisible(true);
     this.setSize(LARG, HAUT);
-	laTache.start();
+    supportTache.start();
 
     }
 }
