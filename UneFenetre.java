@@ -12,6 +12,7 @@ class UneFenetre extends JFrame
 	Thread laTache = new Thread(sonMobile);
     this.add(sonMobile);
     this.setVisible(true);
+    this.setSize(LARG, HAUT);
 	laTache.start();
 
     }
