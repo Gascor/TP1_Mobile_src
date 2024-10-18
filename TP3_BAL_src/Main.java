@@ -6,7 +6,7 @@ public class Main {
         Producteur prod = new Producteur("ABCDE", bal);  // Producteur de lettres
         Consommateur cons = new Consommateur(bal);  // Consommateur
 
-        prod.start();  // Lancer le producteur
-        cons.start();  // Lancer le consommateur
+        prod.start();
+        cons.start();
     }
 }

@@ -1,11 +1,11 @@
 import java.awt.*;
 import javax.swing.*;
 
-class UneFenetre extends JFrame 
+class UneFenetre extends JFrame
 {
     UnMobile tache;
     private final int LARG=1000, HAUT=550;
-    
+
     public UneFenetre(int unNombre)
     {
         Container conteneur = getContentPane();
@@ -18,8 +18,8 @@ class UneFenetre extends JFrame
             supportTache.start();
 
         }
-    this.setVisible(true);
-    this.setSize(LARG, HAUT);
+        this.setVisible(true);
+        this.setSize(LARG, HAUT);
 
     }
 }
