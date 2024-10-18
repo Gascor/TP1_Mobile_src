@@ -60,7 +60,7 @@ On peut également souligner les différents moyens d'obtenir des informations d
 
 ### <a id="diagramme-de-classe"/>3.1. Diagramme de Classe
 
-![Diagramme TP1](conception.png)
+![Diagramme TP1](https://github.com/Gascor/TP1_Mobile_src/blob/master/docs/Conception/ConceptionV1.png)
 
 ### <a id="les-classes-et-leurs-rôles"/>3.2. Les Classes et leurs Rôles
 
@@ -117,7 +117,7 @@ Les **sémaphores** et **mutex** sont des mécanismes qui permettent de réguler
 
 ### <a id="tp3-diagramme-de-classe"/>5.1. Diagramme de Classe
 
-![Diagramme TP3](BalConception.png)
+![Diagramme TP3](https://github.com/Gascor/TP1_Mobile_src/blob/master/docs/Conception/Conception_BAL_V1.png)
 
 ### <a id="explication-du-problème"/>5.2. Explication du Problème
 
