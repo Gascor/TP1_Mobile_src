@@ -82,12 +82,14 @@ Classe contenant la méthode `main()`, elle sert de point de départ pour lancer
 
 ### <a id="cycle-de-vie-des-threads"/>3.3. Cycle de Vie des Threads
 
-Un **thread** passe par plusieurs états durant son cycle de vie : 
-1. **Prêt** : Le thread est prêt à être exécuté, mais attend son tour.
-2. **En cours d'exécution** : Le thread est activement traité par le processeur.
-3. **Bloqué** : Le thread attend une ressource ou un signal pour continuer.
+Un **thread** passe par plusieurs états :
+1. **Nouveau** : Le thread est créé mais pas encore démarré.
+2. **Prêt** : Le thread est prêt à être exécuté.
+3. **En cours d'exécution** : Le thread est actuellement exécuté par le processeur.
+4. **Bloqué** : Le thread attend une ressource.
+5. **Terminé** : Le thread a terminé d'exécuter sa méthode `run()`.
 
-L'OS gère la distribution des threads entre les cœurs du processeur, assurant une exécution concurrente fluide. Toutefois, il est essentiel de bien synchroniser les threads lorsqu'ils accèdent à des ressources partagées.
+L'OS (Système d'exploitation) gère la distribution des threads entre les cœurs du processeur, assurant une exécution concurrente fluide. Toutefois, il est essentiel de bien synchroniser les threads lorsqu'ils accèdent à des ressources partagées.
 
 ## <a id="tp-2"/>4. TP 2
 
@@ -97,11 +99,17 @@ Dans ce TP, nous avons exploré les problèmes d'accès concurrent entre plusieu
 
 ### <a id="exclusion-mutuelle-et-problèmes-daffichage"/>4.2. Exclusion Mutuelle et Problèmes d'Affichage
 
-Nous avons observé un problème d'affichage dû à la concurrence. Les threads accédaient simultanément à la sortie standard (`System.out`), ce qui causait un mélange dans l'affichage. Ce phénomène se produit lorsque deux ou plusieurs threads essayent d'exécuter des sections de code critiques sans coordination adéquate.
+Lorsque plusieurs threads accèdent aux mêmes ressources (comme `System.out` dans TP2), ils peuvent entrer en conflit. C'est ce qu'on appelle une **condition de course**. Pour éviter cela, il est nécessaire d'utiliser des mécanismes de **synchronisation**.
+
+En Java, l'exclusion mutuelle peut être gérée par le mot-clé `synchronized` ou par des **verrous** comme les objets `Lock`. Cela permet de protéger les **sections critiques**, où l'accès concurrent pourrait entraîner des incohérences dans les données.
 
 ### Exclusion Mutuelle
 
-L'**exclusion mutuelle** permet de garantir qu'une seule instance d'un thread peut accéder à une section critique à un moment donné. Cela est réalisé en Java grâce au mot-clé `synchronized` ou à l'utilisation de **sémaphores** pour verrouiller l'accès à une ressource partagée.
+L’**exclusion mutuelle** est un principe qui garantit qu’un seul thread peut accéder à une **section critique** à un moment donné. Cela empêche les **conditions de course** dans le cas d’accès concurrents à des ressources partagées.
+
+Les **sémaphores** et **mutex** sont des mécanismes qui permettent de réguler cet accès :
+- `wait()` force un thread à attendre qu'une ressource soit disponible.
+- `notify()` réveille un thread en attente lorsque la ressource devient libre.
 
 ---
 
