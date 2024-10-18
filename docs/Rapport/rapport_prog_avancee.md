@@ -144,4 +144,5 @@ Ce rapport présente les concepts étudiés tout en mettant en avant les différ
 > [Voir le Diagramme de Classe du TP1](#diagramme-de-classe)
 >
 > [Voir le Diagramme de Classe du TP3](#tp3-diagramme-de-classe)
-
+> 
+> [Pour plus de détails sur le l'API Concurrent et la blocking Queue](https://blog.paumard.org/cours/java-api/chap05-concurrent-queues.html)
