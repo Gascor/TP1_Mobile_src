@@ -138,7 +138,7 @@ Dans le TP3, le **moniteur** est un mécanisme essentiel qui assure l'exclusion 
 
 De plus, le moniteur utilise des **conditions** : si la BAL est pleine, le thread producteur attend que le consommateur libère de l'espace avant de déposer une lettre. À l'inverse, si la BAL est vide, le consommateur attend que le producteur dépose une nouvelle lettre avant de la retirer. Cela assure un fonctionnement asynchrone fluide sans erreur d'accès concurrent.
 
-## <a id="tp-3bis"/> 6. TP 3bis - Boulangerie avec BlockingQueue
+## <a id="tp3bis"/> 6. TP 3bis - Boulangerie avec BlockingQueue
 
 ### <a id="tp3bis-diagramme-de-classe"/> 6.1. Diagramme de Classe
 
