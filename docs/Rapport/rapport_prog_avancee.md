@@ -202,6 +202,8 @@ Ce rapport présente également les concepts étudiés tout en mettant en avant 
 >
 > [Voir le Diagramme de Classe du TP3](#tp3-diagramme-de-classe)
 >
-> [Voir le Diagramme de Classe du TP4](#tp3bis-diagramme-de-classe)
+> [Voir le Diagramme de Classe du TP3bis](#tp3bis-diagramme-de-classe)
 > 
 > [Pour plus de détails sur le l'API Concurrent et la blocking Queue](https://blog.paumard.org/cours/java-api/chap05-concurrent-queues.html)
+>
+> [Doc BlockingQueue Oracle](https://igm.univ-mlv.fr/~juge/javadoc-19/java.base/java/util/concurrent/BlockingQueue.html)
