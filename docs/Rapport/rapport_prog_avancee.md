@@ -20,8 +20,9 @@
   - [3.2. Les Classes et leurs Rôles](#les-classes-et-leurs-rôles)
   - [3.3. Cycle de Vie des Threads](#cycle-de-vie-des-threads)
 - [4. TP 2 - Problèmes de Synchronisation](#tp-2)
-  - [4.1. Accès Concurrent](#accès-concurrent)
-  - [4.2. Exclusion Mutuelle et Problèmes d'Affichage](#exclusion-mutuelle-et-problèmes-daffichage)
+  - [4.1. Diagramme de Classe](#tp2-diagramme-de-classe)
+  - [4.2. Accès Concurrent](#accès-concurrent)
+  - [4.3. Exclusion Mutuelle et Problèmes d'Affichage](#exclusion-mutuelle-et-problèmes-daffichage)
 - [5. TP 3 - Producteur-Consommateur](#tp-3)
   - [5.1. Diagramme de Classe](#tp3-diagramme-de-classe)
   - [5.2. Explication du Problème](#explication-du-problème)
@@ -100,11 +101,15 @@ Le système d'exploitation gère la répartition des threads sur les cœurs du p
 
 ## <a id="tp-2"/>4. TP 2
 
-### <a id="accès-concurrent"/>4.1. Accès Concurrent
+### <a id="tp2-diagramme-de-classe"/> 4.1. Diagramme de Classe
+
+![Diagramme TP3bis](https://github.com/Gascor/TP1_Mobile_src/blob/master/docs/Conception/Conception_Cemaphore_V1.png)
+
+### <a id="accès-concurrent"/>4.2. Accès Concurrent
 
 Dans ce TP, nous avons exploré les problèmes d'accès concurrent entre plusieurs threads, notamment lorsqu'ils tentent d'accéder à une même ressource (comme une zone mémoire ou une variable partagée). Cela peut entraîner des conflits ou des erreurs si la synchronisation n'est pas gérée correctement.
 
-### <a id="exclusion-mutuelle-et-problèmes-daffichage"/>4.2. Exclusion Mutuelle et Problèmes d'Affichage
+### <a id="exclusion-mutuelle-et-problèmes-daffichage"/>4.3. Exclusion Mutuelle et Problèmes d'Affichage
 
 Lorsque plusieurs threads accèdent aux mêmes ressources (comme `System.out` dans TP2), ils peuvent entrer en conflit. C'est ce qu'on appelle une **condition de course**. Pour éviter cela, il est nécessaire d'utiliser des mécanismes de **synchronisation**.
 
