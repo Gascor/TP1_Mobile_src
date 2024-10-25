@@ -5,8 +5,8 @@
 
 **Auteur :** `Lucas DA SILVA FERREIRA`  
 **Classe :** `INFO3 - FI`  
-**Date :** `18 Octobre 2024`  
-**Heure de finalisation :** `03:20`
+**Date :** `25 Octobre 2024`  
+**Heure de finalisation :** `13:20`
 
 # Compte Rendu - Développement Avancé
 
@@ -25,7 +25,11 @@
 - [5. TP 3 - Producteur-Consommateur](#tp-3)
   - [5.1. Diagramme de Classe](#tp3-diagramme-de-classe)
   - [5.2. Explication du Problème](#explication-du-problème)
-- [6. Conclusion](#conclusion)
+- [6. TP 3bis - Producteur-Consommateur](#tp3bis)
+  - [6.1. Diagramme de Classe](#tp3bis-diagramme-de-classe)
+  - [6.2. Contexte du TP](#contexte3bis)
+  - [6.3. Modele et BlockingQueue](#modele3bis)
+- [7. Conclusion](#conclusion)
 
 ---
 
@@ -55,6 +59,7 @@ On peut également souligner les différents moyens d'obtenir des informations d
 - **Gestionnaire de tâches** : utile pour vérifier l'utilisation des ressources en temps réel, notamment l'usage du processeur, de la mémoire et du disque.
 - **Commandes CMD** : Windows offre plusieurs commandes en ligne permettant d'obtenir des informations spécifiques sur le matériel. Par exemple, la commande `wmic memorychip get serialnumber` permet de récupérer le numéro de série de la mémoire vive (RAM), offrant ainsi plus de détails sur sa configuration.
 
+---
 
 ## <a id="tp-1"/>3. TP 1
 
@@ -82,14 +87,16 @@ Classe contenant la méthode `main()`, elle sert de point de départ pour lancer
 
 ### <a id="cycle-de-vie-des-threads"/>3.3. Cycle de Vie des Threads
 
-Un **thread** passe par plusieurs états :
-1. **Nouveau** : Le thread est créé mais pas encore démarré.
-2. **Prêt** : Le thread est prêt à être exécuté.
-3. **En cours d'exécution** : Le thread est actuellement exécuté par le processeur.
-4. **Bloqué** : Le thread attend une ressource.
-5. **Terminé** : Le thread a terminé d'exécuter sa méthode `run()`.
+Les **threads** passent par plusieurs états au cours de leur cycle de vie :  
+1. **Nouveau** : Le thread est créé mais pas encore démarré.  
+2. **Prêt** : Il est en attente de ressources pour commencer son exécution.  
+3. **En cours d'exécution** : Le thread est en train d'être exécuté par le processeur.  
+4. **Bloqué** : Il est en pause, en attente d'une ressource comme l'accès à un fichier ou à une section critique partagée.  
+5. **Terminé** : Le thread a exécuté tout son code et ne peut plus être relancé.  
 
-L'OS (Système d'exploitation) gère la distribution des threads entre les cœurs du processeur, assurant une exécution concurrente fluide. Toutefois, il est essentiel de bien synchroniser les threads lorsqu'ils accèdent à des ressources partagées.
+Le système d'exploitation gère la répartition des threads sur les cœurs du processeur et peut les déplacer d'un cœur à l'autre si nécessaire. Bien que nous puissions influencer leur synchronisation, l'allocation des ressources est contrôlée par l'OS.
+
+---
 
 ## <a id="tp-2"/>4. TP 2
 
@@ -121,19 +128,69 @@ Les **sémaphores** et **mutex** sont des mécanismes qui permettent de réguler
 
 ### <a id="explication-du-problème"/>5.2. Explication du Problème
 
-Dans ce TP, nous avons implémenté un modèle **Producteur-Consommateur** en Java. L'idée était de simuler un producteur qui insère des lettres dans une boîte aux lettres (BAL) et un consommateur qui les retire de façon asynchrone. Les deux threads doivent fonctionner sans interférence, en utilisant une structure synchronisée pour éviter que l'un accède à la BAL pendant que l'autre l'utilise.
+Dans ce TP, j'ai implémenté un modèle **Producteur-Consommateur** en Java. L'idée était de simuler un producteur qui insère des lettres dans une boîte aux lettres (BAL) et un consommateur qui les retire de façon asynchrone. Les deux threads doivent fonctionner sans interférence, en utilisant une structure synchronisée pour éviter que l'un accède à la BAL pendant que l'autre l'utilise.
 
 La **BAL** agit comme un tampon entre les deux threads. Le producteur utilise la méthode `deposerLettre()` pour insérer une lettre, tandis que le consommateur utilise `retirerLettre()` pour la récupérer. La synchronisation est cruciale ici pour éviter des conflits d'accès simultané à la BAL.
 
+### <a id="53"/>5.3. Modèle Producteur-Consommateur avec Moniteur
+
+Dans le TP3, le **moniteur** est un mécanisme essentiel qui assure l'exclusion mutuelle lors de l'accès à la **Boîte Aux Lettres** (BAL) partagée par le producteur et le consommateur. Un moniteur garantit qu'un seul thread peut entrer dans une section critique (par exemple, `depose()` ou `retrait()`), empêchant ainsi les conflits entre threads.
+
+De plus, le moniteur utilise des **conditions** : si la BAL est pleine, le thread producteur attend que le consommateur libère de l'espace avant de déposer une lettre. À l'inverse, si la BAL est vide, le consommateur attend que le producteur dépose une nouvelle lettre avant de la retirer. Cela assure un fonctionnement asynchrone fluide sans erreur d'accès concurrent.
+
+## <a id="tp-3bis"/> 6. TP 3bis - Boulangerie avec BlockingQueue
+
+### <a id="tp3bis-diagramme-de-classe"/> 6.1. Diagramme de Classe
+
+![Diagramme TP3bis](https://github.com/Gascor/TP1_Mobile_src/blob/master/docs/Conception/Conception_Boulanger_V1.png)
+
+### <a id="contexte3bis"/>6.2. Contexte du TP
+
+Dans ce TP, nous avons implémenté une **boulangerie** avec une file d'attente bloquante (**BlockingQueue**), qui modélise un système de production et de consommation asynchrone. Ce modèle suit le schéma classique **Producteur-Consommateur** vu précédemment, où plusieurs **boulangers** produisent des **pains** et les déposent dans une file d'attente, pendant que des **mangeurs** consomment ces pains à un rythme variable.
+
+La particularité de cette implémentation réside dans l'utilisation de l'API **Concurrent** de Java, en particulier la classe **BlockingQueue**. Cette structure simplifie la gestion de la synchronisation entre les threads producteurs et consommateurs, tout en assurant la sécurité des données partagées.
+
+### Les Classes
+
+- **Boulanger** : Producteur, il dépose des pains dans la file d'attente à intervalle régulier. Si la boulangerie est pleine (20 pains), il attend avant de pouvoir y déposer un nouveau pain.
+  
+- **Mangeur** : Consommateur, il prend des pains de la file d'attente de manière aléatoire. Si la boulangerie est vide, il attend qu'un nouveau pain soit produit. Si un **Pain Empoisonné** est consommé, il arrête son exécution.
+
+- **Boulangerie** : Représente la file d'attente de la boulangerie. Elle utilise une **ArrayBlockingQueue** de taille fixe (20), ce qui signifie qu'elle peut contenir au maximum 20 pains à la fois. Elle offre deux méthodes principales :
+  - `depose()` : Utilisée par le boulanger pour ajouter un pain à la file.
+  - `achete()` : Utilisée par le mangeur pour retirer un pain de la file.
+  
+  La boulangerie utilise des méthodes non bloquantes, comme **`offer()`** et **`poll()`**, pour gérer respectivement les ajouts et les retraits dans la file, avec des délais d'attente maximum.
+
+- **Pain** : Représente les pains créés et consommés. La classe contient un élément spécial, le **Pain Empoisonné**, utilisé pour arrêter les consommateurs "les tuer" une fois qu'il n'y a plus de pains à produire.
+
+### <a id="modele3bis"/> 6.3. Modèle Producteur-Consommateur avec BlockingQueue
+
+Le système fonctionne en continu, les boulangers produisent des pains à intervalles réguliers d'une seconde. Une fois que la boulangerie atteint sa capacité maximale (20 pains), les boulangers doivent attendre que des pains soient consommés pour en produire davantage. 
+
+Les mangeurs, de leur côté, consomment les pains de manière aléatoire (avec un délai entre 0 et 1 seconde). Si un **Pain Empoisonné** est retiré de la boulangerie, cela signale la fin du processus, et les mangeurs arrêtent de consommer.
+
+Cette simulation permet de comprendre et d'illustrer le rôle de **BlockingQueue** dans la gestion de la synchronisation des tâches concurrentes.
+
+### Points Clés de l'Implémentation
+1. **ArrayBlockingQueue** : Une file d'attente bloquante avec une taille fixe qui gère automatiquement la synchronisation entre les producteurs et les consommateurs.
+2. **Pain Empoisonné** : Utilisé pour arrêter les mangeurs et marquer la fin de la simulation.
+3. **Gestion des Délais** : Les méthodes `offer()` et `poll()` sont utilisées avec des délais pour gérer l'attente lorsque la boulangerie est pleine ou vide.
+4. **Modèle Producteur-Consommateur** : Ce modèle classique est ici simplifié par l'utilisation d'une BlockingQueue, qui assure une gestion fluide des tâches concurrentes sans besoin explicite de gestion des verrous.
+
+### Résumé du TP3bis
+
+Grâce à l'utilisation de **BlockingQueue**. La file d'attente bloquante nous a dispensé de la gestion manuelle des verrous et des conditions de course. La simulation de la boulangerie est un exemple concret de l'importance des collections dans des environnements à **haute concurrence**.
+
 ---
 
-### <a id="conclusion"/>6. Conclusion
+### <a id="conclusion"/>7. Conclusion
 
 Jusqu'à maintenant, le cours de **Programmation Avancée** nous a permis d'explorer en profondeur la gestion des threads et des processus en Java. Les trois TP réalisés ont démontré l'importance de la **synchronisation** et de la gestion des ressources partagées. Grâce à ces travaux pratiques, j'ai acquis une solide compréhension des mécanismes sous-jacents à la programmation concurrente, et je comprends désormais mieux l'importance de l'architecture matérielle sur l'exécution des programmes multithreadés.
 
 ---
 
-Ce rapport présente les concepts étudiés tout en mettant en avant les différentes problématiques rencontrées et les solutions mises en œuvre pour les résoudre.
+Ce rapport présente également les concepts étudiés tout en mettant en avant différentes problématiques et des solutions mises en œuvre pour les résoudre. :)
 
 ---
 
@@ -144,5 +201,7 @@ Ce rapport présente les concepts étudiés tout en mettant en avant les différ
 > [Voir le Diagramme de Classe du TP1](#diagramme-de-classe)
 >
 > [Voir le Diagramme de Classe du TP3](#tp3-diagramme-de-classe)
+>
+> [Voir le Diagramme de Classe du TP4](#tp3bis-diagramme-de-classe)
 > 
 > [Pour plus de détails sur le l'API Concurrent et la blocking Queue](https://blog.paumard.org/cours/java-api/chap05-concurrent-queues.html)
